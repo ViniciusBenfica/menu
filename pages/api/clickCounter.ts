@@ -1,13 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type Data = {
-  name: string
-}
+var click: number = 0
 
-export default function handler(
+export default function clickCounter(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<{click: number}>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+  click = ++click
+  res.status(200).json({click})
 }
