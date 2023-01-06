@@ -1,12 +1,17 @@
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+import { Col, Container, Row } from 'react-grid-system'
+import IProductDTO from '../interfaces/IProductDTO'
 import { api } from '../service/api'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Index.module.scss'
+import Imagem from "/public/Frame.png"
 
-export default function Home() {
+export default function Home({itens}: {itens: IProductDTO[]}) {
 
-  const clickItem = async (): Promise<void> => {
-    const {data} = await api.get<{click: number}>('/clickCounter')
+  const clickItem = async (idProduct: number): Promise<void> => {
+    const {data} = await api.post<{click: number}>('/clickCounter', {idProduct})
     console.log(data.click)
   }
 
@@ -19,14 +24,40 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div>
-          <div onClick={clickItem}>
-            <p>NOME</p>
-            <p>DESCRIÇÃO</p>
-            <p>PREÇO</p>
-          </div>
-        </div>
-      </main>
+      {/* <Container> */}
+        {/* <Row> */}
+          {/* <Col sm={12}> */}
+          {itens?.map((item: IProductDTO) => (
+            <Link key={item.id} href={'/2'}>
+              <div onClick={() => clickItem(item.id)} className={styles.teste}>
+                <div>
+                  <h3>{item.name}</h3>
+                  <h4>{item.description}</h4>
+                  <h2>R$ {item.price}</h2>
+                </div>
+                <div>
+                  <Image
+                  alt="The guitarist in the concert."
+                  src={Imagem}
+                  width={100}
+                  height={100}
+                  //  layout="responsive"
+                />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </main>
+          {/* </Col> */}
+        {/* </Row> */}
+      {/* </Container> */}
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const {data} = await api.get('/item/allItens')
+  return {
+    props: {itens: data},
+  }
 }
