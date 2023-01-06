@@ -7,6 +7,7 @@ export default function clickCounter(
   req: NextApiRequest,
   res: NextApiResponse<{click: number}>
 ) {
+  const { idProduct }: {idProduct: number} = req.body
   click = ++click
   res.status(200).json({click})
 }
