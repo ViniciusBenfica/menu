@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import IProductDTO from '../../../interfaces/IProductDTO'
 
-export default function allItens(
+export default async function allItens(
   req: NextApiRequest,
   res: NextApiResponse<IProductDTO[]>
 ) {
