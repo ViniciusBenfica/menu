@@ -28,12 +28,12 @@ export default function Home({itens}: {itens: IProductDTO[]}) {
         {/* <Row> */}
           {/* <Col sm={12}> */}
           {itens?.map((item: IProductDTO) => (
-            <Link key={item.id} href={'/2'}>
-              <div onClick={() => clickItem(item.id)} className={styles.teste}>
+            <Link key={item?.id} href={`/${item?.id}`}>
+              <div onClick={() => clickItem(item?.id)} className={styles.teste}>
                 <div>
-                  <h3>{item.name}</h3>
-                  <h4>{item.description}</h4>
-                  <h2>R$ {item.price}</h2>
+                  <h3>{item?.name}</h3>
+                  <h4>{item?.description}</h4>
+                  <h2>R$ {item?.price}</h2>
                 </div>
                 <div>
                   <Image
@@ -56,7 +56,7 @@ export default function Home({itens}: {itens: IProductDTO[]}) {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const {data} = await api.get('/item/allItens')
+  const {data} = await api.get('/Item/allItens')
   return {
     props: {itens: data},
   }

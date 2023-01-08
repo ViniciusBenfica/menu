@@ -9,7 +9,7 @@ interface IParams extends ParsedUrlQuery {
 }
 
 export default function ProductDetails({item}: {item: IProductDTO}) {
-
+  console.log(item)
   return (
     <>
       <Head>
@@ -36,7 +36,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const { slug } = context.params as IParams
-    const {data} = await api.post('/item/item', {idProduct: slug})
+    const {data} = await api.get(`/Item/item?idProduct=${slug}`)
     return {
       props: {item: data},
     }
