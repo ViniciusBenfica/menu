@@ -1,22 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import prismaClient from '../../../database'
 import IProductDTO from '../../../interfaces/IProductDTO'
 
-export default function item(
+export default async function Item(
   req: NextApiRequest,
-  res: NextApiResponse<IProductDTO>
+  res: NextApiResponse<IProductDTO | null>
 ) {
-  const { idProduct }: {idProduct: number} = req.body
-
-  //idProduct find
-
-  res.status(200).json(
-    {
-      id: 1,
-      name: 'Aussie Beef Quesadillas',
-      price: 4.99,
-      description: 'Pétalas da Bloomin Onion, tiras de filet mignon, mix de queijos e tomate. Tudo'
-    },
-  )
-  
+  const idProduct = req.query.idProduct as string
+  const item = await prismaClient.itens.findFirst({ where: { id: { equals: +idProduct } } })
+  res.status(200).json(item)
 }
