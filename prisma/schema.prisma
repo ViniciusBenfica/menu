@@ -10,9 +10,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Itens {
-  id          Int    @id @default(autoincrement())
+model Owner {
+  id          Int          @id @default(autoincrement())
   name        String
-  description String
-  price       Int
+  email       String       @unique
+  password    String
+  restaurants Restaurant[]
+}
+
+model Restaurant {
+  id       Int     @id @default(autoincrement())
+  name String
+  Owner    Owner?  @relation(fields: [ownerId], references: [id])
+  ownerId  Int?
+  products Itens[]
+}
+
+model Itens {
+  id           Int         @id @default(autoincrement())
+  name         String
+  description  String
+  price        Float
+  image        String?
+  Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId Int?
 }
