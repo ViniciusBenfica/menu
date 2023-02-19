@@ -19,19 +19,22 @@ model Owner {
 }
 
 model Restaurant {
-  id       Int     @id @default(autoincrement())
-  name String
-  Owner    Owner?  @relation(fields: [ownerId], references: [id])
-  ownerId  Int?
-  products Itens[]
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  logo        String?
+  Owner       Owner?     @relation(fields: [ownerId], references: [id])
+  ownerId     Int?
+  products    Products[]
 }
 
-model Itens {
+model Products {
   id           Int         @id @default(autoincrement())
   name         String
   description  String
   price        Float
   image        String?
+  views        Int         @default(0)
   Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId Int?
 }
