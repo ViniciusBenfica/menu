@@ -1,10 +1,7 @@
-import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
-import { Col, Container, Row } from 'react-grid-system'
-import IProductDTO from 'interfaces/items/UpdateItemDTO'
+import IProductDTO from 'interfaces/IProductDTO'
 import { api } from 'service/api'
 import styles from 'styles/Index.module.scss'
 import Imagem from "/public/Frame.png"
