@@ -3,4 +3,5 @@ export default interface CreateItemDTO {
   price: number;
   description: string;
   image?: string;
+  restaurantId: number;
 }

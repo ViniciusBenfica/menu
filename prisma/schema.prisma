@@ -19,12 +19,12 @@ model Owner {
 }
 
 model Restaurant {
-  id          Int        @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   description String
   logo        String?
-  Owner       Owner?     @relation(fields: [ownerId], references: [id])
-  ownerId     Int?
+  Owner       Owner?  @relation(fields: [ownerId], references: [id])
+  ownerId     Int
   products    Items[]
 }
 
@@ -36,5 +36,5 @@ model Items {
   image        String?
   views        Int         @default(0)
   Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
-  restaurantId Int?
+  restaurantId Int
 }
