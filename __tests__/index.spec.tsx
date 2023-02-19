@@ -3,7 +3,7 @@ import { render } from "@testing-library/react"
 import axios from "axios"
 import { api } from "service/api"
 import MockAdapter from 'axios-mock-adapter';
-import IProductDTO from "interfaces/IProductDTO";
+import IProductDTO from "interfaces/items/UpdateItemDTO";
 import { Teste } from "pages/index";
 
 var axiosMock = new MockAdapter(axios);

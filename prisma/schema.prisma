@@ -25,10 +25,10 @@ model Restaurant {
   logo        String?
   Owner       Owner?     @relation(fields: [ownerId], references: [id])
   ownerId     Int?
-  products    Products[]
+  products    Items[]
 }
 
-model Products {
+model Items {
   id           Int         @id @default(autoincrement())
   name         String
   description  String

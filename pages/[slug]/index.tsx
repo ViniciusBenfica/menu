@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { ParsedUrlQuery } from 'querystring'
-import IProductDTO from '../../interfaces/IProductDTO'
+import IProductDTO from '../../interfaces/items/UpdateItemDTO'
 import { api } from '../../service/api'
 
 interface IParams extends ParsedUrlQuery {
