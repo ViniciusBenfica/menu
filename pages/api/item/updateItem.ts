@@ -2,7 +2,7 @@ import prismaClient from "database"
 import UpdateItemDTO from "interfaces/items/UpdateItemDTO"
 import { NextApiRequest, NextApiResponse } from "next"
 
-export default async function AddItem(
+export default async function updateItem(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {

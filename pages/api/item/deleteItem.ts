@@ -1,7 +1,7 @@
 import prismaClient from "database"
 import { NextApiRequest, NextApiResponse } from "next"
 
-export default async function AddItem(
+export default async function deleteItem(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {

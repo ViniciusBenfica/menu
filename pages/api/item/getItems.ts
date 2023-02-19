@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prismaClient from '../../../database'
 
-export default async function AllItens(
+export default async function getItems(
   req: NextApiRequest,
   res: NextApiResponse<any[]>
 ) {

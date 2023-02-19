@@ -4,7 +4,7 @@ import CreateItemDTO from 'interfaces/items/CreateItemDTO'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prismaClient from '../../../database'
 
-export default async function AddItem(
+export default async function createItem(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
