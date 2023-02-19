@@ -1,21 +1,21 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Col, Container, Row } from 'react-grid-system'
 import IProductDTO from 'interfaces/IProductDTO'
 import { api } from 'service/api'
 import styles from 'styles/Index.module.scss'
-import Imagem from "/public/Frame.png"
+import { Swiper, SwiperSlide } from 'swiper/react';
+import Logo from "/public/Frame.png"
+import 'swiper/scss';
+import 'swiper/scss/navigation';
+import 'swiper/scss/pagination';
 
+const caregotys = ['Café', 'Mucin', 'Bebidas', 'Jantar', 'Jantaar', 'Jantar', 'Jantar']
 export const clickItem = async (idProduct: number): Promise<void> => {
   const { data } = await api.post<{ click: number }>('/clickCounter', { idProduct })
   console.log(data.click)
 }
-
-export const Teste = async () => {
-  const { data } = await api.get('/Item/allItems')
-  return data
-}
-
 export default function Home({ itens }: { itens: IProductDTO[] }) {
 
   return (
@@ -27,32 +27,55 @@ export default function Home({ itens }: { itens: IProductDTO[] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {itens?.map((item: IProductDTO) => (
-          <Link key={item?.id} href={`/${item?.id}`}>
-            <div onClick={() => clickItem(item?.id)} className={styles.teste}>
-              <div>
-                <h3>{item?.name}</h3>
-                <h4>{item?.description}</h4>
-                <h2>R$ {item?.price}</h2>
-              </div>
-              <div>
+        <header className={styles.header}>
+          <h1 className={styles.restaurantName}>Restaurante do bem</h1>
+        </header>
+        <Container>
+          <section>
+            <div className={styles.research}>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15Z" stroke="#D0D4DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12.95 12.95L17 17" stroke="#D0D4DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <input placeholder='Pesquise pelo item desejado...' />
+            </div>
+          </section>
+          <div>
+            <Swiper
+              slidesPerView={5}
+              spaceBetween={25}
+            >
+              {caregotys.map((item) => (
+                <SwiperSlide>
+                  <div className={styles.category}></div>
+                  <h4 className={styles.categoryName}>{item}</h4>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+          {itens?.map((item: IProductDTO) => (
+            <Link key={item?.id} href={`/${item?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+              <div onClick={() => clickItem(item?.id)} className={styles.productContainer}>
+                <div className={styles.productDescription}>
+                  <h3>{item?.name}</h3>
+                  <h4>{item?.description}</h4>
+                  <h2>R$ {item?.price}</h2>
+                </div>
                 <Image
-                  alt="The guitarist in the concert."
-                  src={Imagem}
-                  width={100}
-                  height={100}
+                  className={styles.productImage}
+                  alt="Image product"
+                  src={Logo}
                 />
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </Container>
       </main>
     </div>
   )
 }
 
-export const getStaticProps = async () => {
-// export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('/Item/allItems')
   return {
     props: { itens: data },
