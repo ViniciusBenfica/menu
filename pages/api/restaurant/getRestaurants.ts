@@ -7,6 +7,10 @@ export default async function getRestaurants(
   res: NextApiResponse<any[]>
 ) {
 
-  const restaurants = await prismaClient.restaurant.findMany()
+  const restaurants = await prismaClient.restaurant.findMany({
+    include: {
+      products: true
+    }
+  })
   res.status(200).json(restaurants)
 }

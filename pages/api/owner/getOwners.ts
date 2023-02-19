@@ -7,10 +7,9 @@ export default async function getItems(
   res: NextApiResponse<any[]>
 ) {
 
-  const itens = await prismaClient.items.findMany({
+  const itens = await prismaClient.owner.findMany({
     include: {
-      category: true,
-      Restaurant: true
+      restaurants: true
     }
   }
   )
