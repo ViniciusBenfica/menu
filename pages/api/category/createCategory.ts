@@ -1,18 +1,19 @@
 import prismaClient from "database"
-import CreateOwnerDTO from "interfaces/owner/CreateOwnerDTO"
+import CreateCategoryDTO from "interfaces/category/CreateCategory"
 import { NextApiRequest, NextApiResponse } from "next"
 
-export default async function createOwner(
+
+export default async function createItem(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
 
   if (req.method === 'POST') {
 
-    const owner: CreateOwnerDTO = req.body
+    const category: CreateCategoryDTO = req.body
 
-    const payload = await prismaClient.owner.create({
-      data: { ...owner }
+    const payload = await prismaClient.category.create({
+      data: { ...category }
     })
 
     res.status(201).json(payload)

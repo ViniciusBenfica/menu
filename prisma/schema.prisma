@@ -37,4 +37,12 @@ model Items {
   views        Int         @default(0)
   Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId Int
+  category     Category    @relation(fields: [categoryId], references: [id])
+  categoryId   Int
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String @unique
+  Items Items[]
 }

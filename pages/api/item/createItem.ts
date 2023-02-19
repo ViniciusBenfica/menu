@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import CreateItemDTO from 'interfaces/items/CreateItemDTO'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prismaClient from '../../../database'

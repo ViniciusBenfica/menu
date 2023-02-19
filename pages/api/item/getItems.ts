@@ -7,6 +7,11 @@ export default async function getItems(
   res: NextApiResponse<any[]>
 ) {
 
-  const itens = await prismaClient.items.findMany()
+  const itens = await prismaClient.items.findMany({
+    include: {
+      category: true
+    }
+  }
+  )
   res.status(200).json(itens)
 }
