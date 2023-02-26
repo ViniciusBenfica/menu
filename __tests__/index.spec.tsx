@@ -1,29 +1,31 @@
 // import { renderHook } from '@testing-library/react';
-import { render } from "@testing-library/react"
-import axios from "axios"
-import { api } from "service/api"
-import MockAdapter from 'axios-mock-adapter';
-import IProductDTO from "interfaces/IProductDTO";
-
-var axiosMock = new MockAdapter(axios);
+import { getStaticProps } from "@/pages/index";
 
 describe('index', () => {
-/*   it("check item return data", async () => {
-
-    var dataMock: IProductDTO = {
-      id: 0,
-      name: 'string',
-      price: 0,
-      description: 'string',
-    };
-
-    axiosMock.onGet().reply(200, dataMock);
-    const items = await Teste();
+  it("check item return data", async () => {
+    const items: any = await getStaticProps({} as any);
     expect(items).toEqual(expect.objectContaining({
-      id: expect.any(Number),
-      name: expect.any(String),
-      price: expect.any(Number),
-      description: expect.any(String),
+      props: {
+        itens: expect.any(Array)
+      }
     }));
-  }); */
+    
+    if (items.props.itens.length > 0) {
+      expect(items.props.itens).toContainEqual({
+        id: expect.any(Number),
+        name: expect.any(String),
+        description: expect.any(String),
+        price: expect.any(Number),
+        image: expect.any(String),
+        views: expect.any(Number),
+        restaurantId: expect.any(Number),
+        categoryId: expect.any(Number),
+        category: expect.any(Object),
+        Restaurant: expect.any(Object)
+      });
+    }
+    else {
+      expect(items.props.itens).toHaveLength(0);
+    }
+  });
 })
