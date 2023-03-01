@@ -12,8 +12,7 @@ const customJestConfig = {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/components/(.*)$': '<rootDir>/components/$1',
     '^@/pages/(.*)$': '<rootDir>/pages/$1',
-    '^@/service/(.*)$': '<rootDir>/service/$1',
-
+    '^@/services/(.*)$': '<rootDir>/services/$1',
   },
   testEnvironment: 'node',
 }
