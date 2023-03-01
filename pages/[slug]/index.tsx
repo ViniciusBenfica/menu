@@ -2,14 +2,14 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import { ParsedUrlQuery } from 'querystring'
 import IProductDTO from '../../interfaces/items/UpdateItemDTO'
-import { api } from '../../service/api'
+import { api } from '../../services/api'
 
 interface IParams extends ParsedUrlQuery {
     slug: string
 }
 
 export default function ProductDetails({item}: {item: IProductDTO}) {
-  console.log(item)
+  
   return (
     <>
       <Head>

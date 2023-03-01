@@ -1,22 +1,23 @@
 import Head from 'next/head'
+import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Col, Container, Row } from 'react-grid-system'
-import IProductDTO from 'interfaces/IProductDTO'
-import { api } from 'service/api'
-import styles from 'styles/Index.module.scss'
-import { Swiper, SwiperSlide } from 'swiper/react';
+import IProductDTO from '@/interfaces/IProductDTO'
+import CreateCategoryDTO from '@/interfaces/category/CreateCategory'
+import { api } from '@/services/api'
+import styles from '@/styles/Index.module.scss'
 import Logo from "/public/Frame.png"
-import 'swiper/scss';
+
+/* import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
+import 'swiper/scss'; */
 
-const caregotys = ['Café', 'Mucin', 'Bebidas', 'Jantar', 'Jantaar', 'Jantar', 'Jantar']
 export const clickItem = async (idProduct: number): Promise<void> => {
   const { data } = await api.post<{ click: number }>('/clickCounter', { idProduct })
-  console.log(data.click)
 }
-export default function Home({ itens }: { itens: IProductDTO[] }) {
+export default function Home({ itens, categories }: { itens: IProductDTO[], categories: CreateCategoryDTO[] }) {
 
   return (
     <div>
@@ -40,19 +41,19 @@ export default function Home({ itens }: { itens: IProductDTO[] }) {
               <input placeholder='Pesquise pelo item desejado...' />
             </div>
           </section>
-          <div>
+         {/*  <div>
             <Swiper
               slidesPerView={5}
               spaceBetween={25}
             >
-              {caregotys.map((item) => (
-                <SwiperSlide>
+              {categories.map((item, index) => (
+                <SwiperSlide key={index}>
                   <div className={styles.category}></div>
-                  <h4 className={styles.categoryName}>{item}</h4>
+                  <h4 className={styles.categoryName}>{item.name}</h4>
                 </SwiperSlide>
               ))}
             </Swiper>
-          </div>
+          </div> */}
           {itens?.map((item: IProductDTO) => (
             <Link key={item?.id} href={`/${item?.id}`} style={{ textDecoration: 'none', color: 'black' }}>
               <div onClick={() => clickItem(item?.id)} className={styles.productContainer}>
@@ -76,8 +77,9 @@ export default function Home({ itens }: { itens: IProductDTO[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('/Item/allItems')
+  const itemsResponse = await api.get('/Item/getItems')
+  const categoriesResponse = await api.get('/category/getCategories')
   return {
-    props: { itens: data },
+    props: { itens: itemsResponse.data, categories: categoriesResponse.data },
   }
 }
