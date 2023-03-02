@@ -1,16 +1,16 @@
-// import { renderHook } from '@testing-library/react';
 import { getStaticProps } from "@/pages/index";
 
 describe('index', () => {
   it("check item return data", async () => {
-    const items: any = await getStaticProps({} as any);
+    const items = await getStaticProps({});
+
     expect(items).toEqual(expect.objectContaining({
       props: {
         itens: expect.any(Array)
       }
     }));
     
-    if (items.props.itens.length > 0) {
+    if ('props' in items && items.props.itens.length > 0) {
       expect(items.props.itens).toContainEqual({
         id: expect.any(Number),
         name: expect.any(String),
@@ -23,9 +23,10 @@ describe('index', () => {
         category: expect.any(Object),
         Restaurant: expect.any(Object)
       });
-    }
-    else {
+    } else if('props' in items) {
       expect(items.props.itens).toHaveLength(0);
+    } else {
+      // find a way to fail tests
     }
   });
 })
